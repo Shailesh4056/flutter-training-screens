@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="6b62f07b-26b1-480f-97e8-e1e1aa8c8777" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Find_digits.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/String_functions.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/String_operations.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Student_Database.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/abstract_program.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/alldatatypes.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/arithmeticProgram.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bankingApplication.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bill_splitting.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/class_Inheritance.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/even_odd.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fibonacci.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hello_word.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/interfaces_implementation.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/largest_number.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/leetcode.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/list_fold.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/main.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/map_merging.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/map_programs.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merge_list.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/min_maxlist.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/operator.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/operator_usage.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/palindrome_number.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/practice.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reverse_string.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shuffling_and_combininglist.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sum_of_list.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/swaptwo_numbers.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/switch_case.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vehicle_demo.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vowels_count.dart" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Dart File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2bLEJxrb2TB8k3m4Gf5eVSkw99N" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "dart.analysis.tool.window.visible": "false",
+    "last_opened_file_path": "C:/Users/shail/StudioProjects/fab22_tasks",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
+    "show.migrate.to.gradle.popup": "false"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\shail\StudioProjects\practice\flutter_training" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\shail\StudioProjects\practice" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Dart Command Line App.main.dart (1)">
+    <configuration name="main.dart (1)" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application" temporary="true" nameIsGenerated="true">
+      <option name="filePath" value="$PROJECT_DIR$/main.dart" />
+      <option name="workingDirectory" value="$PROJECT_DIR$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main.dart" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application" temporary="true" nameIsGenerated="true">
+      <option name="filePath" value="$PROJECT_DIR$/.idea/main.dart" />
+      <option name="workingDirectory" value="$PROJECT_DIR$/.idea" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Dart Command Line App.main.dart (1)" />
+        <item itemvalue="Dart Command Line App.main.dart" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="6b62f07b-26b1-480f-97e8-e1e1aa8c8777" name="Changes" comment="" />
+      <created>1705985893134</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1705985893134</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <default-breakpoints>
+        <breakpoint type="dart-exception" />
+      </default-breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
