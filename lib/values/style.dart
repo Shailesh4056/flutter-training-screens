@@ -43,8 +43,8 @@ final TextStyle textSemiBold = TextStyle(
 );
 final TextStyle textBold = TextStyle(
   decoration: TextDecoration.none,
-  fontWeight: FontWeight.w700,
-  fontSize: 16.spMin,
+  fontWeight: FontWeight.w600,
+  fontSize: 14.spMin,
   overflow: TextOverflow.ellipsis,
   fontFamily: ''
 );

@@ -31,7 +31,7 @@ class AppButtonInverse extends StatelessWidget {
         elevation: elevation,
         padding: const EdgeInsets.only(top: 10.0, bottom: 10.0).r,
         onPressed: callback,
-        color: buttonColor ? AppColor.primaryColor : AppColor.primaryColor,
+        color: buttonColor ? AppColor.grey : AppColor.green,
         shape: RoundedRectangleBorder(
           side: const BorderSide(color: AppColor.primaryColor),
           borderRadius:

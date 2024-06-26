@@ -17,8 +17,12 @@ abstract class AppColor {
   static const Color lightGray = Color(0xffFAFAFA);
   static const Color mercury = Color(0xffE1E1E1);
   static const Color blackHaze = Color(0xffF2F3F3);
-  static const Color lightGreen = Color(0xffE0FFDD) ;
+  static const Color lightGreen = Color(0xffE7F5EF);
   static const Color textBackgroundColor = Color(0xFFFFFFFF);
+  static const Color greenLight = Color(0xFFE7F5EF);
+  static const Color lightBrownSugarColor = Color(0xFFfff9e3);
+  static const Color burntOrange = Color(0xFFDA9C53);
+  static const Color grayLight = Color(0xFFFAFAFA);
 
   static const Color colorTextFill = Color(0xFFF3F4F6);
   static const Color colorHint = Color(0xFF999B9C);

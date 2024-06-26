@@ -21,8 +21,10 @@ class Assets {
   static const String imageCheckedBox = 'assets/image/checked_box.png';
   static const String imageChildcare = 'assets/image/childcare.png';
   static const String imageCleaning = 'assets/image/cleaning.png';
+  static const String imageCommitted = 'assets/image/Committed.png';
   static const String imageDownArrow = 'assets/image/downArrow.png';
   static const String imageEmail = 'assets/image/email.png';
+  static const String imageFollowed = 'assets/image/Followed.png';
   static const String imageFrame = 'assets/image/Frame.png';
   static const String imageGift = 'assets/image/gift.png';
   static const String imageGmailLogo = 'assets/image/gmailLogo.png';
@@ -41,6 +43,8 @@ class Assets {
   static const String imageOtpLogo = 'assets/image/otpLogo.png';
   static const String imagePassword = 'assets/image/password.png';
   static const String imagePetcare = 'assets/image/petcare.png';
+  static const String imagePhone = 'assets/image/phone.png';
+  static const String imagePowerOff = 'assets/image/powerOff.png';
   static const String imageProfile = 'assets/image/profile.png';
   static const String imageRectangle = 'assets/image/Rectangle.png';
   static const String imageSearch = 'assets/image/search.png';
@@ -49,6 +53,8 @@ class Assets {
   static const String imageTryg = 'assets/image/tryg.png';
   static const String imageTutoring = 'assets/image/tutoring.png';
   static const String imageUser = 'assets/image/user.png';
+  static const String imageVerify = 'assets/image/verify.png';
+  static const String imageWhatsapp = 'assets/image/whatsapp.png';
   static const String imageWork = 'assets/image/work.png';
   static const String imageYoung = 'assets/image/young woman imagining things while reading e-book.png';
 

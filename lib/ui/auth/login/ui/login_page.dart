@@ -136,8 +136,12 @@ class _LoginPageState extends State<LoginPage> {
             top: 80.h,
             left: 41.w,
             right: 41.w,
-            child: Text("Become volunteer & start donations",style: textBold.copyWith(
+            child: Text("Become volunteer & start donations",
+                overflow: TextOverflow.clip
+              ,textAlign: TextAlign.center,style: textRegular.copyWith(
               color: AppColor.black,
+              fontSize: 24.sp,
+              fontWeight: FontWeight.w600,
 
             ),)
           ),
@@ -273,6 +277,7 @@ class _LoginPageState extends State<LoginPage> {
           overflow: TextOverflow.clip,textAlign: TextAlign.center,style: textRegular.copyWith(color: AppColor.grey),),
           16.0.verticalSpace,
           AppButtonInverse(
+
             S.current.logIn.toUpperCase(),
             () {
               if (_formKey.currentState?.validate() ?? false) {

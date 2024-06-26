@@ -1,8 +1,11 @@
 import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 
@@ -10,9 +13,12 @@ import 'package:auto_route/auto_route.dart';
 import 'package:dart_ipify/dart_ipify.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mobx/mobx.dart';
+import 'package:super_bullet_list/bullet_list.dart';
+import 'package:surprise_test_3/widget/button_widget_inverse.dart';
 
 import '../../../../core/api/base_response/base_response.dart';
 import '../../../../core/db/app_db.dart';
@@ -25,6 +31,7 @@ import '../../../../values/style.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../../generated/assets.dart';
 import '../../router/app_router.dart';
 import '../../util/media_picker.dart';
 import '../../util/permission_utils.dart';
@@ -62,137 +69,921 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColor.white,
       appBar: AppBar(
         title: Text(
-          S.current.home,
-          style: textBold.copyWith(fontSize: 30.spMin),
+          "Social Partner",
+          style: textBold.copyWith(fontSize: 20.spMin, color: AppColor.black),
         ),
+        elevation: 0,
+        backgroundColor: AppColor.white,
+        actions: [
+          Image(
+            image: AssetImage(Assets.imagePowerOff),
+            height: 32.h,
+          ),
+          CircleAvatar(
+            radius: 14.r,
+            backgroundImage: AssetImage(Assets.imageOtpLogo),
+          ),
+          20.horizontalSpace,
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            25.0.verticalSpace,
-            25.0.verticalSpace,
-            Column(
-              children: [
-                if (count != null)
-                  Text(
-                    "${S.current.pickedFileCount} $count",
-                    style: textBold,
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 25.r),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  CachedNetworkImage(
+                    imageUrl:
+                        "https://www.clubmahindra.com/blog/media/section_images/banner1920-fd2220d7822fd03.webp",
+                    height: 195.h,
+                    fit: BoxFit.contain,
+                    placeholder: (context, url) =>
+                        Center(child: new CircularProgressIndicator()),
+                    errorWidget: (context, url, error) =>
+                        Center(child: new Icon(Icons.error)),
                   ),
-                10.0.verticalSpace,
-                if (pickedFilesListStore != null)
-                  Wrap(
-                    children: pickedFilesListStore!
-                        .map(
-                          (e) => e != null
-                              ? Image.file(
-                                  File(e.path),
-                                  height: 100,
-                                  width: 100,
-                                  fit: BoxFit.cover,
-                                )
-                              : const SizedBox.shrink(),
-                        )
-                        .toList(),
-                  ),
-                if (pickedDocuments != null && type == FilesType.audio ||
-                    type == FilesType.documents)
-                  Wrap(
-                    children: pickedDocuments!
-                        .map(
-                          (e) => Image.file(
-                            File(e.path!),
-                            height: 100,
-                            width: 100,
-                            fit: BoxFit.cover,
+                  30.verticalSpace,
+                  Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(10.r),
+                          child: CachedNetworkImage(
+                            imageUrl:
+                                "https://pbs.twimg.com/profile_images/1667142873035284481/H7HvEm_c_400x400.jpg",
+                            height: 60.h,
+                            width: 60,
+                            fit: BoxFit.contain,
+                            placeholder: (context, url) =>
+                                Center(child: new CircularProgressIndicator()),
+                            errorWidget: (context, url, error) =>
+                                Center(child: new Icon(Icons.error)),
                           ),
+                        ),
+                        15.horizontalSpace,
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "World Health Organisation",
+                                  style: textBold.copyWith(
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                10.horizontalSpace,
+                                Image(
+                                  image: AssetImage(Assets.imageVerify),
+                                  height: 15.h,
+                                  width: 15.w,
+                                )
+                              ],
+                            ),
+                            15.verticalSpace,
+                            Text(
+                              "12 mutuals including Karan",
+                              style: textBold.copyWith(
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w700,
+                                  color: AppColor.grey),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  30.verticalSpace,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "About us:",
+                        style: textBold.copyWith(
+                            fontSize: 14.sp, fontWeight: FontWeight.w700),
+                      ),
+                      5.verticalSpace,
+                      SuperBulletList(
+                        iconSize: 5.r,
+                        iconColor: AppColor.grey,
+                        items: [
+                          Text(
+                              'We are a multinational NPO working towards the welfare of the society'),
+                        ],
+                      )
+                    ],
+                  ),
+                  30.verticalSpace,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 30.r, vertical: 11.r),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20.r),
+                            color: AppColor.green),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text(
+                              "Committed",
+                              style: textRegular.copyWith(
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w700,
+                                  color: AppColor.white),
+                            ),
+                            15.horizontalSpace,
+                            Image(image: AssetImage(Assets.imageCommitted))
+                          ],
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 30.r, vertical: 11.r),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20.r),
+                          color: AppColor.lightGreen,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text(
+                              "Followed",
+                              style: textRegular.copyWith(
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w700,
+                                  color: AppColor.green),
+                            ),
+                            15.horizontalSpace,
+                            Image(
+                              image: AssetImage(Assets.imageFollowed),
+                              color: AppColor.green,
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  30.verticalSpace,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                            color: AppColor.grey.withOpacity(0.2),
+                            borderRadius: BorderRadius.circular(10.r)),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 20.r, vertical: 6.r),
+                        child: Column(
+                          children: [
+                            Text(
+                              "1,265",
+                              style: textBold.copyWith(),
+                            ),
+                            Text(
+                              "committed",
+                              style: textRegular.copyWith(
+                                  color: AppColor.grey, fontSize: 12.sp),
+                            )
+                          ],
+                        ),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                            color: AppColor.grey.withOpacity(0.2),
+                            borderRadius: BorderRadius.circular(10.r)),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 20.r, vertical: 6.r),
+                        child: Column(
+                          children: [
+                            Text(
+                              "1,265",
+                              style: textBold.copyWith(),
+                            ),
+                            Text(
+                              "followers",
+                              style: textRegular.copyWith(
+                                  color: AppColor.grey, fontSize: 12.sp),
+                            )
+                          ],
+                        ),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                            color: AppColor.greenLight,
+                            borderRadius: BorderRadius.circular(10.r)),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 20.r, vertical: 6.r),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Image(image: AssetImage(Assets.imagePhone)),
+                                5.horizontalSpace,
+                                Image(image: AssetImage(Assets.imageEmail)),
+                                5.horizontalSpace,
+                                Image(image: AssetImage(Assets.imageWhatsapp)),
+                              ],
+                            ),
+                            Text(
+                              "contact",
+                              style: textRegular.copyWith(
+                                  color: AppColor.green, fontSize: 12.sp),
+                            )
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                  30.verticalSpace,
+                  Container(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 30.r, vertical: 11.r),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20.r),
+                      color: AppColor.lightGreen,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Get Certificate",
+                          style: textRegular.copyWith(
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w700,
+                              color: AppColor.green),
+                        ),
+                        15.horizontalSpace,
+                        Image(
+                          image: AssetImage(Assets.imageCommitted),
+                          color: AppColor.green,
                         )
-                        .toList(),
-                  )
-              ],
-            ),
-            25.0.verticalSpace,
-            Column(
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextButton(
-                        onPressed: () =>
-                            requestCameraPermissions().then((value) async {
-                          if (value) {
-                            pickFile(FilesType.image);
-                          }
-                        }),
-                        style: style,
-                        child: Text(S.current.pickImage),
-                      ),
+                      ],
                     ),
-                    Expanded(
-                      child: TextButton(
-                        onPressed: () =>
-                            requestCameraPermissions().then((value) async {
-                          if (value) {
-                            pickFile(FilesType.video);
-                          }
-                        }),
-                        style: style,
-                        child: Text(S.current.pickVideo),
-                      ),
+                  ),
+                  30.verticalSpace,
+                  Container(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 30.r, vertical: 11.r),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20.r),
+                      color: AppColor.lightGreen,
                     ),
-                  ],
-                ),
-                10.0.verticalSpace,
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextButton(
-                        onPressed: () =>
-                            requestCameraPermissions().then((value) async {
-                          if (value) {
-                            pickFile(FilesType.documents);
-                          }
-                        }),
-                        style: style,
-                        child: Text(S.current.pickDocuments),
-                      ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Volunteer",
+                          style: textRegular.copyWith(
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w700,
+                              color: AppColor.green),
+                        ),
+                        15.horizontalSpace,
+                        Image(
+                          image: AssetImage(Assets.imageFollowed),
+                          color: AppColor.green,
+                        )
+                      ],
                     ),
-                    Expanded(
-                      child: TextButton(
-                        onPressed: () =>
-                            requestCameraPermissions().then((value) async {
-                          if (value) {
-                            pickFile(FilesType.audio);
-                          }
-                        }),
-                        style: style,
-                        child: Text(S.current.pickAudio),
+                  ),
+                  30.verticalSpace,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Celebrity Ambassadors",
+                        style: textRegular.copyWith(
+                            fontSize: 12.sp, color: AppColor.grey),
                       ),
-                    ),
-                  ],
-                ),
-                20.0.verticalSpace,
-              ],
-            ),
-            25.0.verticalSpace,
-            buildTakePhotoPermission(context),
-            25.0.verticalSpace,
-            TextButton(
-              onPressed: () {
-                appDB.logout();
-                appRouter.replaceAll([const LoginRoute()]);
-              },
-              style: TextButton.styleFrom(
-                backgroundColor: AppColor.accentColor,
+                      15.verticalSpace,
+                      SizedBox(
+                        height: 100.h,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: 10,
+                          itemBuilder: (context, index) {
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                    margin: EdgeInsets.only(right: 30.r),
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: CircleAvatar(
+                                      radius: 30.r,
+                                      backgroundImage: CachedNetworkImageProvider(
+                                          'https://buffer.com/resources/content/images/2024/04/AI-Image-Generators--1-.png'),
+                                    )),
+                                15.verticalSpace,
+                                Text(
+                                  "Starbucks",
+                                  overflow: TextOverflow.clip,
+                                  style: textRegular.copyWith(
+                                      fontSize: 12.sp, color: AppColor.grey),
+                                )
+                              ],
+                            );
+                          },
+                        ),
+                      )
+                    ],
+                  ),
+                  30.verticalSpace,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Company Ambassadors",
+                        style: textRegular.copyWith(
+                            fontSize: 12.sp, color: AppColor.grey),
+                      ),
+                      15.verticalSpace,
+                      SizedBox(
+                        height: 100.h,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: 10,
+                          itemBuilder: (context, index) {
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                    margin: EdgeInsets.only(right: 30.r),
+                                    decoration:
+                                        BoxDecoration(shape: BoxShape.circle),
+                                    child: CircleAvatar(
+                                      radius: 30.r,
+                                      backgroundImage: CachedNetworkImageProvider(
+                                          'https://upload.wikimedia.org/wikipedia/en/thumb/d/d3/Starbucks_Corporation_Logo_2011.svg/640px-Starbucks_Corporation_Logo_2011.svg.png'),
+                                    )),
+                                15.verticalSpace,
+                                Text(
+                                  "Starbucks",
+                                  overflow: TextOverflow.clip,
+                                  style: textRegular.copyWith(
+                                      fontSize: 12.sp, color: AppColor.grey),
+                                )
+                              ],
+                            );
+                          },
+                        ),
+                      ),
+                      30.verticalSpace,
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 15.r, vertical: 16.r),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5.r),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Top Volunteer",
+                              style: textRegular.copyWith(
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColor.grey),
+                            ),
+                            Text(
+                              "Karan Chawla",
+                              style: textRegular.copyWith(
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColor.black),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                 "heyy",
-                  style: textBold.copyWith(color: AppColor.primaryColor),
-                ),
+            ),
+            30.verticalSpace,
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 25.r, vertical: 15.r),
+              decoration: BoxDecoration(
+                color: AppColor.lightBrownSugarColor,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Updates",
+                    style: textRegular.copyWith(color: AppColor.burntOrange),
+                  ),
+                  15.verticalSpace,
+                  Container(
+                    padding: EdgeInsets.all(15.r),
+                    decoration: BoxDecoration(color: AppColor.grayLight),
+                    width: 1.sw,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(30.r),
+                          child: CachedNetworkImage(
+                            imageUrl:
+                                "https://img.freepik.com/premium-photo/cloud-sky-blue-transparent-background-realistic-fluffy-white-object-vector-illustration_865659-410.jpg",
+                            height: 175.h,
+                            fit: BoxFit.contain,
+                            placeholder: (context, url) =>
+                                Center(child: new CircularProgressIndicator()),
+                            errorWidget: (context, url, error) =>
+                                Center(child: new Icon(Icons.error)),
+                          ),
+                        ),
+                        15.verticalSpace,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Save earth",
+                              style: textBold.copyWith(
+                                fontSize: 14.sp,
+                              ),
+                            ),
+                            Container(
+                              child: Row(
+                                children: [
+                                  Text(
+                                    "Share",
+                                    style: textRegular.copyWith(
+                                      color: AppColor.green,
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  5.horizontalSpace,
+                                  Icon(
+                                    Icons.share,
+                                    color: AppColor.green,
+                                    size: 11.h,
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        RichText(
+                          text: TextSpan(
+                            text: "Jan 5, 23, Britain ",
+                            style: textLight.copyWith(
+                              color: AppColor.grey,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 12.spMin,
+                            ),
+                            children: <InlineSpan>[
+                              TextSpan(
+                                text: "| 50k interested",
+                                style: textSemiBold.copyWith(
+                                    fontSize: 12.spMin,
+                                    color: AppColor.grey,
+                                    fontWeight: FontWeight.w400),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content: Text(S.current.tNc)),
+                                    );
+                                  },
+                              ),
+                            ],
+                          ),
+                        ),
+                        15.verticalSpace,
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 7.r, vertical: 5.r),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20.r),
+                                color: AppColor.burntOrange.withOpacity(0.2),
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Text(
+                                    "End  Date ; 23 Jun 24",
+                                    style: textRegular.copyWith(
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w700,
+                                      color: AppColor.burntOrange,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 7.r, vertical: 5.r),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20.r),
+                                color: AppColor.burntOrange.withOpacity(0.2),
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Text(
+                                    "37,025 participated",
+                                    style: textRegular.copyWith(
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w700,
+                                      color: AppColor.burntOrange,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        15.verticalSpace,
+                        Text(
+                          "Sit sit magna leo semper et sem egestas tincidunt. Nisl aliquet pellentesque aliquam aenean fermentum quis. Congue rutrum faucibus sit at.",
+                          style: textRegular.copyWith(
+                              fontSize: 12.sp, fontWeight: FontWeight.w400),
+                          textAlign: TextAlign.start,
+                          overflow: TextOverflow.clip,
+                        ),
+                        15.verticalSpace,
+                        SizedBox(
+                          height: 30.h,
+                          child: MaterialButton(
+                            elevation: 0,
+                            padding:
+                                const EdgeInsets.only(top: 10.0, bottom: 10.0)
+                                    .r,
+                            onPressed: () {},
+                            color: AppColor.green,
+                            shape: RoundedRectangleBorder(
+                              side: BorderSide.none,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10.r)),
+                            ),
+                            child: Text(
+                              "Donate",
+                              style: textBold.copyWith(
+                                  color: AppColor.white, fontSize: 12.spMin),
+                            ),
+                          ),
+                        ),
+                        15.verticalSpace,
+                        Container(
+                          decoration: BoxDecoration(
+                              color: AppColor.white,
+                              borderRadius: BorderRadius.circular(10.r)),
+                          padding: EdgeInsets.symmetric(
+                              vertical: 10.r, horizontal: 15.r),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  RichText(
+                                    text: TextSpan(
+                                      text: "\$105,171 raised ",
+                                      style: textRegular.copyWith(
+                                          color: AppColor.green,
+                                          fontSize: 12.sp),
+                                      children: <InlineSpan>[
+                                        TextSpan(
+                                          text: "(\$140,228 goal)",
+                                          style: textRegular.copyWith(
+                                              color: AppColor.grey,
+                                              fontSize: 12.sp),
+                                          recognizer: TapGestureRecognizer()
+                                            ..onTap = () {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                SnackBar(
+                                                    content:
+                                                        Text(S.current.tNc)),
+                                              );
+                                            },
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Text("75%",
+                                      style: textRegular.copyWith(
+                                          color: AppColor.grey,
+                                          fontSize: 12.sp)),
+                                ],
+                              ),
+                              10.verticalSpace,
+                              LinearProgressIndicator(
+                                backgroundColor: AppColor.greenLight,
+                                color: AppColor.green,
+                                value: 0.7,
+                                borderRadius: BorderRadius.circular(10.r),
+                                minHeight: 9.h,
+                              )
+                            ],
+                          ),
+
+                        ),
+
+                      ],
+                    ),
+                  ),
+                  15.verticalSpace,
+                  Container(
+                    padding:
+                    EdgeInsets.symmetric(horizontal: 30.r, vertical: 11.r),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20.r),
+                      color: AppColor.lightGreen,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "View All Campaign",
+                          style: textRegular.copyWith(
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w700,
+                              color: AppColor.green),
+                        ),
+                        15.horizontalSpace,
+                 Icon(Icons.arrow_forward,color: AppColor.green,size: 13.h,)
+                      ],
+                    ),
+                  ),
+                  15.verticalSpace,
+
+                  Text(
+                    "Sos",
+                    style: textRegular.copyWith(color: AppColor.burntOrange),
+                  ),
+
+                  Container(
+                    padding: EdgeInsets.all(15.r),
+                    decoration: BoxDecoration(color: AppColor.grayLight),
+                    width: 1.sw,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(30.r),
+                          child: CachedNetworkImage(
+                            imageUrl:
+                            "https://assets.telegraphindia.com/telegraph/2022/Oct/1665998444_india.jpg",
+                            height: 175.h,
+                            fit: BoxFit.contain,
+                            placeholder: (context, url) =>
+                                Center(child: new CircularProgressIndicator()),
+                            errorWidget: (context, url, error) =>
+                                Center(child: new Icon(Icons.error)),
+                          ),
+                        ),
+                        15.verticalSpace,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Save earth",
+                              style: textBold.copyWith(
+                                fontSize: 14.sp,
+                              ),
+                            ),
+                            Container(
+                              child: Row(
+                                children: [
+                                  Text(
+                                    "Share",
+                                    style: textRegular.copyWith(
+                                      color: AppColor.green,
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  5.horizontalSpace,
+                                  Icon(
+                                    Icons.share,
+                                    color: AppColor.green,
+                                    size: 11.h,
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        RichText(
+                          text: TextSpan(
+                            text: "Jan 5, 23, Britain ",
+                            style: textLight.copyWith(
+                              color: AppColor.grey,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 12.spMin,
+                            ),
+                            children: <InlineSpan>[
+                              TextSpan(
+                                text: "| 50k interested",
+                                style: textSemiBold.copyWith(
+                                    fontSize: 12.spMin,
+                                    color: AppColor.grey,
+                                    fontWeight: FontWeight.w400),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content: Text(S.current.tNc)),
+                                    );
+                                  },
+                              ),
+                            ],
+                          ),
+                        ),
+                        15.verticalSpace,
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 7.r, vertical: 5.r),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20.r),
+                                color: AppColor.burntOrange.withOpacity(0.2),
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceAround,
+                                children: [
+                                  Text(
+                                    "End  Date ; 23 Jun 24",
+                                    style: textRegular.copyWith(
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w700,
+                                      color: AppColor.burntOrange,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 7.r, vertical: 5.r),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20.r),
+                                color: AppColor.burntOrange.withOpacity(0.2),
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceAround,
+                                children: [
+                                  Text(
+                                    "37,025 participated",
+                                    style: textRegular.copyWith(
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w700,
+                                      color: AppColor.burntOrange,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        15.verticalSpace,
+                        Text(
+                          "Sit sit magna leo semper et sem egestas tincidunt. Nisl aliquet pellentesque aliquam aenean fermentum quis. Congue rutrum faucibus sit at.",
+                          style: textRegular.copyWith(
+                              fontSize: 12.sp, fontWeight: FontWeight.w400),
+                          textAlign: TextAlign.start,
+                          overflow: TextOverflow.clip,
+                        ),
+                        15.verticalSpace,
+                        SizedBox(
+                          height: 30.h,
+                          child: MaterialButton(
+                            elevation: 0,
+                            padding:
+                            const EdgeInsets.only(top: 10.0, bottom: 10.0)
+                                .r,
+                            onPressed: () {},
+                            color: AppColor.green,
+                            shape: RoundedRectangleBorder(
+                              side: BorderSide.none,
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(10.r)),
+                            ),
+                            child: Text(
+                              "Donate",
+                              style: textBold.copyWith(
+                                  color: AppColor.white, fontSize: 12.spMin),
+                            ),
+                          ),
+                        ),
+                        15.verticalSpace,
+                        Container(
+                          decoration: BoxDecoration(
+                              color: AppColor.white,
+                              borderRadius: BorderRadius.circular(10.r)),
+                          padding: EdgeInsets.symmetric(
+                              vertical: 10.r, horizontal: 15.r),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                                children: [
+                                  RichText(
+                                    text: TextSpan(
+                                      text: "\$105,171 raised ",
+                                      style: textRegular.copyWith(
+                                          color: AppColor.green,
+                                          fontSize: 12.sp),
+                                      children: <InlineSpan>[
+                                        TextSpan(
+                                          text: "(\$140,228 goal)",
+                                          style: textRegular.copyWith(
+                                              color: AppColor.grey,
+                                              fontSize: 12.sp),
+                                          recognizer: TapGestureRecognizer()
+                                            ..onTap = () {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                SnackBar(
+                                                    content:
+                                                    Text(S.current.tNc)),
+                                              );
+                                            },
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Text("75%",
+                                      style: textRegular.copyWith(
+                                          color: AppColor.grey,
+                                          fontSize: 12.sp)),
+                                ],
+                              ),
+                              10.verticalSpace,
+                              LinearProgressIndicator(
+                                backgroundColor: AppColor.greenLight,
+                                color: AppColor.green,
+                                value: 0.7,
+                                borderRadius: BorderRadius.circular(10.r),
+                                minHeight: 9.h,
+                              )
+                            ],
+                          ),
+
+                        ),
+
+                      ],
+                    ),
+                  ),
+                  15.verticalSpace,
+                  Container(
+                    padding:
+                    EdgeInsets.symmetric(horizontal: 30.r, vertical: 11.r),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20.r),
+                      color: AppColor.lightGreen,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "View All Campaign",
+                          style: textRegular.copyWith(
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w700,
+                              color: AppColor.green),
+                        ),
+                        15.horizontalSpace,
+                        Icon(Icons.arrow_forward,color: AppColor.green,size: 13.h,)
+                      ],
+                    ),
+                  ),
+
+
+                ],
               ),
             )
           ],
