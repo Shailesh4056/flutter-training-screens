@@ -21,8 +21,7 @@ Future<void> setupLocator() async {
       : await getLibraryDirectory();
 
   Hive
-    ..init(appDocumentDir.path)
-    ..registerAdapter(UserDataAdapter());
+    ..init(appDocumentDir.path);
   locator.registerSingletonAsync<AppDB>(() => AppDB.getInstance());
 
   /// setup navigator instance
@@ -33,7 +32,7 @@ Future<void> setupLocator() async {
 
   /// setup encryption service
   locator.registerLazySingleton(
-    () => EncService(aesKey: "WQXy4CzZyUyJNOr5z5mvcR13dwxBGKnr"),
+    () => EncService(aesKey: "Ewgmi98zL9HYNOlTRRtanaweh6g8eucp"),
   );
 
   /// register repositories implementation

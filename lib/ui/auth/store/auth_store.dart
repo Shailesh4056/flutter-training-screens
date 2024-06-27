@@ -11,27 +11,20 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mobx/mobx.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:uuid/uuid.dart';
-import 'dart:io';
-
-import 'package:auto_route/auto_route.dart';
-import 'package:dart_ipify/dart_ipify.dart';
-import 'package:device_info_plus/device_info_plus.dart';
-import 'package:flutter/material.dart';
-
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mobx/mobx.dart';
-
 import '../../../../core/api/base_response/base_response.dart';
 import '../../../../core/db/app_db.dart';
 import '../../../../core/locator/locator.dart';
 import '../../../../data/model/request/login_request_model.dart';
 import '../../../../data/model/response/user_profile_response.dart';
-
 import '../../../../data/repository_impl/auth_repo_impl.dart';
 import '../../../core/api/base_response/fb_user_data.dart';
-import '../../../core/db/app_db.dart';
+
 import '../../../core/exceptions/app_exceptions.dart';
 import '../../../core/exceptions/dio_exception_util.dart';
+import '../../../data/model/response/home_data.dart';
+
+
+
 
 part 'auth_store.g.dart';
 
@@ -40,6 +33,9 @@ class AuthStore = _AuthStoreBase with _$AuthStore;
 abstract class _AuthStoreBase with Store {
   @observable
   BaseResponse<UserData?>? loginResponse;
+
+  @observable
+  HomeData? homeData;
 
   @observable
   BaseResponse? logoutResponse;
@@ -55,11 +51,25 @@ abstract class _AuthStoreBase with Store {
   Future login(LoginRequestModel request) async {
     try {
       errorMessage = null;
-      // var commonStoreFuture =
-      //     ObservableFuture<BaseResponse<UserData?>>(authRepo.signIn(request));
-      // loginResponse = await commonStoreFuture;
+      loginResponse = await authRepo.signIn(request);
       await Future.delayed(const Duration(seconds: 5), () {});
-      loginResponse = BaseResponse(message: "Login successfully", code: "1");
+    } on DioException catch (dioError) {
+      errorMessage = DioExceptionUtil.handleError(dioError);
+    } on AppException catch (e) {
+      errorMessage = e.toString();
+    } catch (e, st) {
+      debugPrint(e.toString());
+      debugPrintStack(stackTrace: st);
+      errorMessage = e.toString();
+    }
+  }
+
+  @action
+  Future home(Map<String,dynamic> request) async {
+    try {
+      errorMessage = null;
+      homeData = await authRepo.homeData(request);
+      await Future.delayed(const Duration(seconds: 5), () {});
     } on DioException catch (dioError) {
       errorMessage = DioExceptionUtil.handleError(dioError);
     } on AppException catch (e) {
@@ -174,11 +184,11 @@ abstract class _AuthStoreBase with Store {
         final userData = await FacebookAuth.instance.getUserData();
         debugPrint(userData.toString());
         FacebookAuth.instance.logOut();
-        appDB.user = UserData(
-            socialId: userData["id"],
-            email: userData["email"],
-            firstName: userData["name"],
-            profileImage: userData["picture"]["data"]["url"]);
+        // appDB.user = UserData(
+        //     socialId: userData["id"],
+        //     email: userData["email"],
+        //     firstName: userData["name"],
+        //     profileImage: userData["picture"]["data"]["url"]);
         return appDB.user;
       case LoginStatus.cancelled:
         debugPrint('Login cancelled by the user.');

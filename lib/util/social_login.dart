@@ -127,10 +127,10 @@ class SocialLogin {
 
       if (credential.identityToken != null) {
         final result = parseJwt(credential.identityToken!);
-        return UserData(
-          id: result["sub"] as int?,
-          email: result["email"] as String?,
-        );
+        // return UserData(
+        //   id: result["sub"] as int?,
+        //   email: result["email"] as String?,
+        // );
       } else {
         return null;
       }

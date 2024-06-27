@@ -17,6 +17,7 @@ class CustomInterceptors extends Interceptor {
     options.responseType = ResponseType.plain;
 
     options.headers.putIfAbsent("api-key", () => appDB.apiKey);
+    options.headers.putIfAbsent("accept-language", () => appDB.appLanguage);
     if (appDB.token.isNotEmpty) {
       options.headers['token'] = enc.encrypt(appDB.token);
     }

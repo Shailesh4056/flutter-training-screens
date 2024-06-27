@@ -73,14 +73,17 @@ class _LoginPageState extends State<LoginPage> {
     _disposers ??= [
       // success reaction
       reaction((_) => authStore.loginResponse,
-          (BaseResponse<UserData?>? response) {
-        showLoading.value = false;
-        if (response?.code == "1") {
-          showMessage(response?.message ?? "");
-          appRouter.replaceAll([const HomeRoute()]);
-          appDB.isLogin = true;
-        }
-      }),
+              (response) {
+        print("hello shailesh ${response?.code}");
+            showLoading.value = false;
+            if (response?.code == 10) {
+              var token=authStore.loginResponse?.data?.userDetail.token;
+              appDB.token = token!;
+              showMessage(response?.message ?? "");
+              appRouter.replaceAll([const HomeRoute()]);
+              appDB.isLogin = true;
+            }
+          }),
       // error reaction
       reaction((_) => authStore.errorMessage, (String? errorMessage) {
         showLoading.value = false;
@@ -103,95 +106,83 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Stack(
-        children: [
-          Positioned(
-            top: -60,
-            left: 0,
-            right: -10,
-            child: Container(
-              height: 240.h,
-              width: 200.w,
-              decoration: BoxDecoration(
-                color: AppColor.lightGreen,
-                borderRadius: BorderRadius.circular(100.r),
-              ),
+      body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Stack(
+              children: [
+                Container(
+                  height: 420.h,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(Assets.imageUnion),fit: BoxFit.cover
+                    )
+                  ),
+                ),
+
+
+                Positioned(
+                    top: 80.h,
+                    left: 41.w,
+                    right: 41.w,
+                    child: Text("Become volunteer & start donations",
+                      overflow: TextOverflow.clip
+                      ,textAlign: TextAlign.center,style: textRegular.copyWith(
+                        color: AppColor.black,
+                        fontSize: 24.sp,
+                        fontWeight: FontWeight.w600,
+
+                      ),)
+                ),
+
+                Positioned(
+                  top: 207.h,
+                  left: 48.w,
+                  right: 48.w,
+                  child: Image(image: AssetImage(
+                      Assets.imageYoung
+                  )),
+                ),
+
+
+
+                // ValueListenableBuilder(
+                //   valueListenable: showLoading,
+                //   builder: (_, bool isLoading, Widget? child) {
+                //     return LoadingWidget(
+                //       status: isLoading,
+                //       child: child!,
+                //     );
+                //   },
+                //   child: Padding(
+                //     padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                //     child: SingleChildScrollView(
+                //       child: Column(
+                //         mainAxisSize: MainAxisSize.min,
+                //         children: [
+                //           30.0.verticalSpace,
+                //           getHeaderContent(),
+                //           getSignInForm(),
+                //           30.0.verticalSpace,
+                //           SignUpWidget(
+                //             fromLogin: true,
+                //             onTap: () => locator<AppRouter>()
+                //                 .push(const SignUpRoute())
+                //                 .then((value) => _formKey.currentState?.reset()),
+                //           ),
+                //           40.0.verticalSpace,
+                //         ],
+                //       ),
+                //     ),
+                //   ),
+                // ),
+              ],
             ),
-          ),
-          Positioned(
-            top: 120.h,
-            right: -20.w,
-            left: 130.w,
-            child: Container(
-              height: 240.h,
-              width: 200.w,
-              decoration: BoxDecoration(
-                color: AppColor.lightGreen,
-                borderRadius: BorderRadius.circular(100.r),
-              ),
-            ),
-          ),
-
-          Positioned(
-            top: 80.h,
-            left: 41.w,
-            right: 41.w,
-            child: Text("Become volunteer & start donations",
-                overflow: TextOverflow.clip
-              ,textAlign: TextAlign.center,style: textRegular.copyWith(
-              color: AppColor.black,
-              fontSize: 24.sp,
-              fontWeight: FontWeight.w600,
-
-            ),)
-          ),
-
-          Positioned(
-            top: 185.h,
-            left: 48.w,
-            right: 48.w,
-            child: Image(image: AssetImage(
-              Assets.imageYoung
-            )),
-          ),
-
-          Positioned(
-              bottom: 30.h,
-              left: 30.w,
-              right: 30.w,
-              child: getSignInForm()),
-
-          // ValueListenableBuilder(
-          //   valueListenable: showLoading,
-          //   builder: (_, bool isLoading, Widget? child) {
-          //     return LoadingWidget(
-          //       status: isLoading,
-          //       child: child!,
-          //     );
-          //   },
-          //   child: Padding(
-          //     padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          //     child: SingleChildScrollView(
-          //       child: Column(
-          //         mainAxisSize: MainAxisSize.min,
-          //         children: [
-          //           30.0.verticalSpace,
-          //           getHeaderContent(),
-          //           getSignInForm(),
-          //           30.0.verticalSpace,
-          //           SignUpWidget(
-          //             fromLogin: true,
-          //             onTap: () => locator<AppRouter>()
-          //                 .push(const SignUpRoute())
-          //                 .then((value) => _formKey.currentState?.reset()),
-          //           ),
-          //           40.0.verticalSpace,
-          //         ],
-          //       ),
-          //     ),
-          //   ),
-          // ),
-        ],
+            getSignInForm(),
+          ],
+        ),
       ),
     );
   }
@@ -217,75 +208,78 @@ class _LoginPageState extends State<LoginPage> {
   Widget getSignInForm() {
     return Form(
       key: _formKey,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-
-        children: [
-          25.0.verticalSpace,
-          Text(
-            S.current.mobileNo,
-            style: textRegular.copyWith(color: AppColor.grey, fontSize: 12.sp),
-          ),
-          5.verticalSpace,
-          AppTextField(
-            filled: true,
-            controller: mobileController,
-            label: S.current.mobNumber,
-            hint: S.of(context).enterNumbers,
-            keyboardType: TextInputType.phone,
-            validators: mobileValidator,
-            focusNode: mobileNode,
-            // contentPadding: EdgeInsets.symmetric(),
-            inputFormatters: <TextInputFormatter>[
-              FilteringTextInputFormatter.allow(RegExp('[0-9]')),
-              LengthLimitingTextInputFormatter(10),
-            ],
-            prefixIcon: Padding(
-              padding:  EdgeInsets.symmetric(horizontal: 15.r),
-              child: GestureDetector(
-                onTap: () async => {
-                  Future.delayed(Duration.zero, () {
-                    mobileNode.unfocus();
-                    mobileNode.canRequestFocus = false;
-                  }),
-                  await _openCountryPickerDialog(),
-                  mobileNode.canRequestFocus = true,
-                },
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      '+${_selectedDialogCountry.phoneCode}',
-                      style: textMedium.copyWith(
-                        fontSize: 15.spMin,
+      child: Padding(
+        padding:  EdgeInsets.symmetric(horizontal: 25.r),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            30.0.verticalSpace,
+            Text(
+              S.current.mobileNo,
+              style: textRegular.copyWith(color: AppColor.grey, fontSize: 12.sp),
+            ),
+            5.verticalSpace,
+            AppTextField(
+              filled: true,
+              controller: mobileController,
+              label: S.current.mobNumber,
+              hint: S.of(context).enterNumbers,
+              keyboardType: TextInputType.phone,
+              validators: mobileValidator,
+              focusNode: mobileNode,
+              // contentPadding: EdgeInsets.symmetric(),
+              inputFormatters: <TextInputFormatter>[
+                FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+                LengthLimitingTextInputFormatter(10),
+              ],
+              prefixIcon: Padding(
+                padding:  EdgeInsets.symmetric(horizontal: 15.r),
+                child: GestureDetector(
+                  onTap: () async => {
+                    Future.delayed(Duration.zero, () {
+                      mobileNode.unfocus();
+                      mobileNode.canRequestFocus = false;
+                    }),
+                    await _openCountryPickerDialog(),
+                    mobileNode.canRequestFocus = true,
+                  },
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        '+${_selectedDialogCountry.phoneCode}',
+                        style: textMedium.copyWith(
+                          fontSize: 15.spMin,
+                        ),
                       ),
-                    ),
-                    5.0.horizontalSpace,
-                    Image.asset(
-                      Assets.imageArrowDown,
-                      color: AppColor.osloGray,
-                      height: 8.0,
-                      width: 8.0,
-                    ),
-                  ],
+                      5.0.horizontalSpace,
+                      Image.asset(
+                        Assets.imageArrowDown,
+                        color: AppColor.osloGray,
+                        height: 8.0,
+                        width: 8.0,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-          30.verticalSpace,
-          Text(S.current.byContinuingYouAreAgreeingToOutTermsConditionsPrivacy,
-          overflow: TextOverflow.clip,textAlign: TextAlign.center,style: textRegular.copyWith(color: AppColor.grey),),
-          16.0.verticalSpace,
-          AppButtonInverse(
+            30.verticalSpace,
+            Text(S.current.byContinuingYouAreAgreeingToOutTermsConditionsPrivacy,
+              overflow: TextOverflow.clip,textAlign: TextAlign.center,style: textRegular.copyWith(color: AppColor.grey),),
+            16.0.verticalSpace,
+            AppButtonInverse(
 
-            S.current.logIn.toUpperCase(),
-            () {
-              if (_formKey.currentState?.validate() ?? false) {
-                loginAndNavigateToHome();
-              }
-            },
-          ),
-        ],
+              S.current.logIn.toUpperCase(),
+                  () {
+                if (_formKey.currentState?.validate() ?? false) {
+                  print(mobileController.text);
+                  loginAndNavigateToHome();
+                }
+              },
+            ),
+          ],
+        ),
       ),
     );
 
@@ -297,23 +291,25 @@ class _LoginPageState extends State<LoginPage> {
     try {
       showLoading.value = true;
       DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+      var androidInfo = await deviceInfo.androidInfo;
       //This is just a sample request body, you need to use and edit it as per your API requirement.
-      var ipAddress = await Ipify.ipv4();
       final logInRequest = LoginRequestModel(
-          loginType: "S",
-          deviceToken: appDB.fcmToken,
-          countryCode: "+91",
-          phone: mobileController.text.trim(),
-          ip: ipAddress);
+        appVersion: androidInfo.version.release,
+        countryCode: "+91",
+        deviceToken: "0",
+       deviceName: androidInfo.brand,
+        deviceType: androidInfo.type,
+        email: "tom@gmail.com",
+        modelName: androidInfo.model,
+        osVersion: androidInfo.version.release,
+        phone: mobileController.text
+
+      );
       if (Platform.isAndroid) {
         var androidInfo = await deviceInfo.androidInfo;
-        logInRequest.uuid = androidInfo.id;
-        logInRequest.deviceModel = androidInfo.device;
         logInRequest.deviceType = "A";
       } else if (Platform.isIOS) {
         var iOSInfo = await deviceInfo.iosInfo;
-        logInRequest.uuid = iOSInfo.identifierForVendor;
-        logInRequest.deviceModel = iOSInfo.name;
         logInRequest.osVersion = iOSInfo.systemVersion;
         logInRequest.deviceType = "I";
       }

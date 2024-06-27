@@ -19,7 +19,7 @@ class _AuthApi implements AuthApi {
   String? baseUrl;
 
   @override
-  Future<BaseResponse<UserData?>> signIn(LoginRequestModel request) async {
+  Future<BaseResponse<UserData>> signIn(LoginRequestModel request) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -33,7 +33,7 @@ class _AuthApi implements AuthApi {
     )
             .compose(
               _dio.options,
-              '/user_authentication/signin',
+              'general/send_otp',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -42,11 +42,39 @@ class _AuthApi implements AuthApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = BaseResponse<UserData?>.fromJson(
+    final value = BaseResponse<UserData>.fromJson(
       _result.data!,
-      (json) =>
-          json == null ? null : UserData.fromJson(json as Map<String, dynamic>),
+      (json) => UserData.fromJson(json as Map<String, dynamic>),
     );
+    return value;
+  }
+
+  @override
+  Future<HomeData?> homeData(Map<String, dynamic> request) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(request);
+    final _result = await _dio
+        .fetch<Map<String, dynamic>?>(_setStreamType<HomeData>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'user/get_social_profile',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value =
+        _result.data == null ? null : HomeData.fromJson(_result.data!);
     return value;
   }
 

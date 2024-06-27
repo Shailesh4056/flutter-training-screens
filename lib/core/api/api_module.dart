@@ -44,22 +44,29 @@ class ApiModule {
       dio.interceptors.add(
         PrettyDioLogger(
           requestBody: true,
-          responseBody: false,
+          responseBody: true,
+          requestHeader: true,
+          request: true,
+          compact: true,
+          error: true,
+          responseHeader: true
+
         ),
       );
     }
     dio.interceptors.add(CustomInterceptors());
 
     /// Disable logging into production
-    if (!kDebugMode) {
-      dio.interceptors.add(
-        PrettyDioLogger(
-          requestHeader: true,
-          request: false,
-          responseHeader: true,
-        ),
-      );
-    }
+    dio.interceptors.add(
+      PrettyDioLogger(
+        requestHeader: true,
+        request: true,
+        responseHeader: true,
+        error: true,compact: true,
+        requestBody: true,
+        responseBody: true,
+      ),
+    );
     dio.interceptors.add(InternetInterceptors());
 
     return dio;

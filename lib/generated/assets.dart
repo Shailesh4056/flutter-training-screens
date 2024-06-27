@@ -52,6 +52,7 @@ class Assets {
   static const String imageStartupIndiaHubLogo = 'assets/image/startup-india-hub-logo.png';
   static const String imageTryg = 'assets/image/tryg.png';
   static const String imageTutoring = 'assets/image/tutoring.png';
+  static const String imageUnion = 'assets/image/Union.png';
   static const String imageUser = 'assets/image/user.png';
   static const String imageVerify = 'assets/image/verify.png';
   static const String imageWhatsapp = 'assets/image/whatsapp.png';

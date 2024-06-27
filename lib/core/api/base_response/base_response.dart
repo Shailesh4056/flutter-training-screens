@@ -9,7 +9,7 @@ part 'base_response.g.dart';
 )
 class BaseResponse<T> {
   @JsonKey(name: 'code')
-  String? code;
+  int? code;
   @JsonKey(name: 'message')
   String? message;
   @JsonKey(name: 'data')
@@ -32,9 +32,9 @@ class BaseResponse<T> {
 
   bool get isOk =>
       code != null &&
-          code!.isNotEmpty &&
-          code!.toLowerCase() == '1'.toLowerCase() ||
-      code!.toLowerCase() == '2'.toLowerCase();
+          code!=null &&
+          code! == 1||
+      code! == 2;
 
   bool get isNotOk => !isOk;
 }

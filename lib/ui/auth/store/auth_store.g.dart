@@ -25,6 +25,22 @@ mixin _$AuthStore on _AuthStoreBase, Store {
     });
   }
 
+  late final _$homeDataAtom =
+      Atom(name: '_AuthStoreBase.homeData', context: context);
+
+  @override
+  HomeData? get homeData {
+    _$homeDataAtom.reportRead();
+    return super.homeData;
+  }
+
+  @override
+  set homeData(HomeData? value) {
+    _$homeDataAtom.reportWrite(value, super.homeData, () {
+      super.homeData = value;
+    });
+  }
+
   late final _$logoutResponseAtom =
       Atom(name: '_AuthStoreBase.logoutResponse', context: context);
 
@@ -65,6 +81,14 @@ mixin _$AuthStore on _AuthStoreBase, Store {
     return _$loginAsyncAction.run(() => super.login(request));
   }
 
+  late final _$homeAsyncAction =
+      AsyncAction('_AuthStoreBase.home', context: context);
+
+  @override
+  Future<dynamic> home(Map<String, dynamic> request) {
+    return _$homeAsyncAction.run(() => super.home(request));
+  }
+
   late final _$logoutAsyncAction =
       AsyncAction('_AuthStoreBase.logout', context: context);
 
@@ -77,6 +101,7 @@ mixin _$AuthStore on _AuthStoreBase, Store {
   String toString() {
     return '''
 loginResponse: ${loginResponse},
+homeData: ${homeData},
 logoutResponse: ${logoutResponse},
 errorMessage: ${errorMessage}
     ''';

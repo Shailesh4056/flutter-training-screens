@@ -1,4 +1,6 @@
 
+import 'package:surprise_test_3/data/model/response/home_data.dart';
+
 import '../../core/api/base_response/base_response.dart';
 import '../../core/locator/locator.dart';
 import '../model/request/login_request_model.dart';
@@ -12,16 +14,26 @@ class AuthRepoImpl extends AuthRepository {
   AuthRepoImpl({required this.authApi});
 
   @override
-  Future<BaseResponse<UserData?>> signIn(LoginRequestModel request) async {
-    final BaseResponse<UserData?> response = await authApi.signIn(request);
+  Future<BaseResponse<UserData>?> signIn(LoginRequestModel request) async {
+    final BaseResponse<UserData>? response = await authApi.signIn(request);
     return response;
   }
+
+
 
   @override
   Future< BaseResponse> logout() async {
     final BaseResponse response = await authApi.logout();
     return response;
   }
+
+  @override
+  Future<HomeData?> homeData(Map<String, dynamic> request) async{
+    final HomeData? response = await authApi.homeData(request);
+  return response;
+  }
+
+
 }
 
 final authRepo = locator<AuthRepoImpl>();
