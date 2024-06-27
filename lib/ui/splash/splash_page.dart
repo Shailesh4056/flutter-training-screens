@@ -30,7 +30,7 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   Future<void> initSetting() async {
-    Future.delayed(const Duration(seconds: 1), () {
+    Future.delayed(const Duration(seconds: 10), () {
       final appDB = locator.get<AppDB>();
       if (!appDB.isLogin) {
         locator<AppRouter>().replaceAll([const LoginRoute()]);
