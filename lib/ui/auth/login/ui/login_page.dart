@@ -4,7 +4,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:country_pickers/country.dart';
 import 'package:country_pickers/country_picker_dialog.dart';
 import 'package:country_pickers/utils/utils.dart';
-import 'package:dart_ipify/dart_ipify.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,11 +13,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mobx/mobx.dart';
 
-import '../../../../core/api/base_response/base_response.dart';
 import '../../../../core/db/app_db.dart';
-import '../../../../core/locator/locator.dart';
 import '../../../../data/model/request/login_request_model.dart';
-import '../../../../data/model/response/user_profile_response.dart';
 import '../../../../generated/assets.dart';
 import '../../../../generated/l10n.dart';
 import '../../../../router/app_router.dart';
@@ -27,10 +23,8 @@ import '../../../../values/style.dart';
 import '../../../../values/validator.dart';
 import '../../../../widget/app_text_filed.dart';
 import '../../../../widget/button_widget_inverse.dart';
-import '../../../../widget/loading_widget.dart';
 import '../../../../widget/show_message.dart';
 import '../../store/auth_store.dart';
-import '../widget/sign_up_widget.dart';
 
 @RoutePage()
 class LoginPage extends StatefulWidget {
@@ -79,6 +73,7 @@ class _LoginPageState extends State<LoginPage> {
             if (response?.code == 10) {
               var token=authStore.loginResponse?.data?.userDetail.token;
               appDB.token = token!;
+              print(token);
               showMessage(response?.message ?? "");
               appRouter.replaceAll([const HomeRoute()]);
               appDB.isLogin = true;
@@ -273,7 +268,6 @@ class _LoginPageState extends State<LoginPage> {
               S.current.logIn.toUpperCase(),
                   () {
                 if (_formKey.currentState?.validate() ?? false) {
-                  print(mobileController.text);
                   loginAndNavigateToHome();
                 }
               },

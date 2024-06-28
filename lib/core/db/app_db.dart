@@ -29,7 +29,7 @@ class AppDB {
 
   set isLogin(bool update) => setValue("isLogin", update);
 
-  String get token => getValue("token", defaultValue: "49895e7b0a91370a7a29584d5cf09fc080bc403a8c6f6991565a39bead318f306939acb1d016647be2e38c6501c58367fdb3e9f52542aa2442");
+  String get token => getValue("token", defaultValue: "");
 
   set token(String update) => setValue("token", update);
 

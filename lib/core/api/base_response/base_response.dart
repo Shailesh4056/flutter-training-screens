@@ -31,7 +31,6 @@ class BaseResponse<T> {
       _$BaseResponseToJson(this, toJsonT);
 
   bool get isOk =>
-      code != null &&
           code!=null &&
           code! == 1||
       code! == 2;
