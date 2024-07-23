@@ -57,6 +57,38 @@ mixin _$AuthStore on _AuthStoreBase, Store {
     });
   }
 
+  late final _$selectedIndexAtom =
+      Atom(name: '_AuthStoreBase.selectedIndex', context: context);
+
+  @override
+  int get selectedIndex {
+    _$selectedIndexAtom.reportRead();
+    return super.selectedIndex;
+  }
+
+  @override
+  set selectedIndex(int value) {
+    _$selectedIndexAtom.reportWrite(value, super.selectedIndex, () {
+      super.selectedIndex = value;
+    });
+  }
+
+  late final _$isFavoriteAtom =
+      Atom(name: '_AuthStoreBase.isFavorite', context: context);
+
+  @override
+  bool get isFavorite {
+    _$isFavoriteAtom.reportRead();
+    return super.isFavorite;
+  }
+
+  @override
+  set isFavorite(bool value) {
+    _$isFavoriteAtom.reportWrite(value, super.isFavorite, () {
+      super.isFavorite = value;
+    });
+  }
+
   late final _$loginAsyncAction =
       AsyncAction('_AuthStoreBase.login', context: context);
 
@@ -73,12 +105,39 @@ mixin _$AuthStore on _AuthStoreBase, Store {
     return _$logoutAsyncAction.run(() => super.logout());
   }
 
+  late final _$_AuthStoreBaseActionController =
+      ActionController(name: '_AuthStoreBase', context: context);
+
+  @override
+  void setSelectedIndex(int index) {
+    final _$actionInfo = _$_AuthStoreBaseActionController.startAction(
+        name: '_AuthStoreBase.setSelectedIndex');
+    try {
+      return super.setSelectedIndex(index);
+    } finally {
+      _$_AuthStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setIsFavorite() {
+    final _$actionInfo = _$_AuthStoreBaseActionController.startAction(
+        name: '_AuthStoreBase.setIsFavorite');
+    try {
+      return super.setIsFavorite();
+    } finally {
+      _$_AuthStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''
 loginResponse: ${loginResponse},
 logoutResponse: ${logoutResponse},
-errorMessage: ${errorMessage}
+errorMessage: ${errorMessage},
+selectedIndex: ${selectedIndex},
+isFavorite: ${isFavorite}
     ''';
   }
 }

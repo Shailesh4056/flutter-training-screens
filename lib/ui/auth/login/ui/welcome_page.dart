@@ -1,10 +1,9 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mobx/mobx.dart';
-import 'package:trendify/core/locator/locator.dart';
 import 'package:trendify/values/export.dart';
 import 'package:trendify/widget/button_widget_inverse.dart';
 import '../../../../core/api/base_response/base_response.dart';
@@ -98,257 +97,262 @@ class _WelcomePageState extends State<WelcomePage>
     pageViewTwo(),
     pageViewThree(),
   ];
-  int currentIndex = 0;
+
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 15.r),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: PageView.builder(
-                  itemBuilder: (context, index) {
-                    print(index);
-                    return pages[index];
-                  },
-                  controller: _pageController,
-                  itemCount: pages.length,
-                  reverse: true,
-                ),
-              ),
-              20.verticalSpace,
-              Row(
-                  children: List.generate(
-                pages.length,
-                (index) => Row(
-                  children: [
-                    Container(
-                      height: 5.h,
-                      width: 50.r,
-                      decoration: BoxDecoration(
-                        color: currentIndex == index
-                            ? AppColor.neonPink
-                            : AppColor.mercury,
-                      ),
-                    ),
-                    5.horizontalSpace,
-                  ],
-                ),
-              )),
-              37.verticalSpace,
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.start,
+        body: Observer(
+          builder: (context) {
+            return Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15.r),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  AppButtonInverse(
-                    "Sign Up",
-                    () => null,
-                    height: 50.h,
-                    width: 163.w,
-                    radius: 5.r,
-                    buttonColor: AppColor.white,
-                    textColor: AppColor.black,
-                    borderColor: AppColor.black,
+                  Expanded(
+                    child: PageView.builder(
+                      controller: _pageController,
+                      itemCount: pages.length,
+                      onPageChanged: (index) => authStore.setSelectedIndex(index),
+                      itemBuilder: (context, index) {
+                        return pages[index];
+                      },
+                    ),
                   ),
-                  19.horizontalSpace,
-                  AppButtonInverse(
-                    "Sign In",
-                    () {
-                      showModalBottomSheet(
-                        isScrollControlled: true,
-                        showDragHandle: true,
-                        context: context,
-                        builder: (context) {
-                          return SingleChildScrollView(
-                            scrollDirection:  Axis.vertical,
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 15.w),
-                              child: Column(
+                  20.verticalSpace,
+                  Row(
+                      children: List.generate(
+                    pages.length,
+                    (index) => Row(
+                      children: [
+                        Container(
+                          height: 5.h,
+                          width: 50.r,
+                          decoration: BoxDecoration(
+                            color: authStore.selectedIndex == index
+                                ? AppColor.neonPink
+                                : AppColor.mercury,
+                          ),
+                        ),
+                        5.horizontalSpace,
+                      ],
+                    ),
+                  )),
+                  37.verticalSpace,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      AppButtonInverse(
+                        "Sign Up",
+                        (){
+                          appRouter.push(SignUpRoute());
+                        },
+                        height: 50.h,
+                        radius: 5.r,
+                        buttonColor: AppColor.white,
+                        textColor: AppColor.black,
+                        borderColor: AppColor.black,
+                      ),
 
-                                children: [
-                                  0.verticalSpace,
-                                  Image(
-                                    image: AssetImage(Assets.imageSpalshLogo),
-                                    height: 55.h,
-                                    width: 53.w,
-                                  ),
-                                  17.verticalSpace,
-                                  Text(
-                                    "Welcome Back !",
-                                    style: textBold.copyWith(
-                                        fontSize: 16.spMin, fontWeight: FontWeight.w500),
-                                  ),
-                                  5.verticalSpace,
-                                  RichText(
-                                    overflow: TextOverflow.clip,
-                                    textAlign: TextAlign.start,
-                                    text: TextSpan(
-                                      text: "Sign In to ",
-                                      style: textLight.copyWith(
-                                        color: AppColor.black,
-                                        fontWeight: FontWeight.w300,
-                                        fontSize: 24.spMin,
-                                      ),
-                                      children: [
-                                        TextSpan(
-                                          text: "BagZag",
-                                          style: textSemiBold.copyWith(
-                                              fontSize: 24.spMin,
-                                              color: AppColor.neonPink,
-                                              fontWeight: FontWeight.w300),
-                                          recognizer: TapGestureRecognizer()..onTap = () {},
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  20.verticalSpace,
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
+                      AppButtonInverse(
+                        "Sign In",
+                        () {
+                          showModalBottomSheet(
+                            isScrollControlled: true,
+                            showDragHandle: true,
+                            context: context,
+                            builder: (context) {
+                              return SingleChildScrollView(
+                                scrollDirection:  Axis.vertical,
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 15.w),
+                                  child: Column(
+
                                     children: [
+                                      0.verticalSpace,
                                       Image(
-                                        image: AssetImage(Assets.imageFacebook),
-                                        height: 50.h,
-                                        width: 50.w,
+                                        image: AssetImage(Assets.imageSpalshLogo),
+                                        height: 55.h,
+                                        width: 53.w,
                                       ),
-                                      15.horizontalSpace,
-                                      Image(
-                                        image: AssetImage(Assets.imageGoogle),
-                                        height: 50.h,
-                                        width: 50.w,
-                                      ),
-                                      15.horizontalSpace,
-                                      Image(
-                                        image: AssetImage(Assets.imageApple),
-                                        height: 50.h,
-                                        width: 50.w,
-                                      ),
-                                    ],
-                                  ),
-                                  25.verticalSpace,
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Image(
-                                        image: AssetImage(Assets.imageArroeForword),
-                                        width: 22.w,
-                                      ),
-                                      7.horizontalSpace,
+                                      17.verticalSpace,
                                       Text(
-                                        "Or",
-                                        style: textMedium.copyWith(color: AppColor.grey),
+                                        "Welcome Back !",
+                                        style: textBold.copyWith(
+                                            fontSize: 16.spMin, fontWeight: FontWeight.w500),
                                       ),
-                                      7.horizontalSpace,
-                                      Image(
-                                        image: AssetImage(Assets.imageArrowBack),
-                                        width: 22.w,
+                                      5.verticalSpace,
+                                      RichText(
+                                        overflow: TextOverflow.clip,
+                                        textAlign: TextAlign.start,
+                                        text: TextSpan(
+                                          text: "Sign In to ",
+                                          style: textLight.copyWith(
+                                            color: AppColor.black,
+                                            fontWeight: FontWeight.w300,
+                                            fontSize: 24.spMin,
+                                          ),
+                                          children: [
+                                            TextSpan(
+                                              text: "BagZag",
+                                              style: textSemiBold.copyWith(
+                                                  fontSize: 24.spMin,
+                                                  color: AppColor.neonPink,
+                                                  fontWeight: FontWeight.w300),
+                                              recognizer: TapGestureRecognizer()..onTap = () {},
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ],
-                                  ),
-                                  20.verticalSpace,
-                                  AppTextField(
-                                    controller: emailController,
-                                    label: S.current.email,
-                                    hint: S.current.email,
-                                    keyboardType: TextInputType.emailAddress,
-                                    validators: emailValidator,
-                                    focusNode: emailNode,
-                                  ),
-                                  10.0.verticalSpace,
-                                  AppTextField(
-                                    label: S.current.password,
-                                    hint: S.current.password,
-                                    obscureText: true,
-                                    validators: passwordValidator,
-                                    controller: passwordController,
-                                    focusNode: passwordNode,
-                                    keyboardType: TextInputType.visiblePassword,
-                                    keyboardAction: TextInputAction.done,
-                                    maxLength: 15,
-                                    suffixIcon: Align(
-                                      alignment: Alignment.centerRight,
-                                      heightFactor: 1.0,
-                                      widthFactor: 1.0,
-                                      child: GestureDetector(
-                                        onTap: () => Future.delayed(Duration.zero, () {
-                                          passwordNode.unfocus();
-                                        }),
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(right: 8.0),
-                                          child: Text(
-                                            S.current.forgot,
-                                            style: textMedium.copyWith(
-                                              color: AppColor.brownColor,
-                                              fontSize: 14.0.spMin,
+                                      20.verticalSpace,
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Image(
+                                            image: AssetImage(Assets.imageFacebook),
+                                            height: 50.h,
+                                            width: 50.w,
+                                          ),
+                                          15.horizontalSpace,
+                                          Image(
+                                            image: AssetImage(Assets.imageGoogle),
+                                            height: 50.h,
+                                            width: 50.w,
+                                          ),
+                                          15.horizontalSpace,
+                                          Image(
+                                            image: AssetImage(Assets.imageApple),
+                                            height: 50.h,
+                                            width: 50.w,
+                                          ),
+                                        ],
+                                      ),
+                                      25.verticalSpace,
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Image(
+                                            image: AssetImage(Assets.imageArroeForword),
+                                            width: 22.w,
+                                          ),
+                                          7.horizontalSpace,
+                                          Text(
+                                            "Or",
+                                            style: textMedium.copyWith(color: AppColor.grey),
+                                          ),
+                                          7.horizontalSpace,
+                                          Image(
+                                            image: AssetImage(Assets.imageArrowBack),
+                                            width: 22.w,
+                                          ),
+                                        ],
+                                      ),
+                                      20.verticalSpace,
+                                      AppTextField(
+                                        controller: emailController,
+                                        label: S.current.email,
+                                        hint: S.current.email,
+                                        keyboardType: TextInputType.emailAddress,
+                                        validators: emailValidator,
+                                        focusNode: emailNode,
+                                      ),
+                                      10.0.verticalSpace,
+                                      AppTextField(
+                                        label: S.current.password,
+                                        hint: S.current.password,
+                                        obscureText: true,
+                                        validators: passwordValidator,
+                                        controller: passwordController,
+                                        focusNode: passwordNode,
+                                        keyboardType: TextInputType.visiblePassword,
+                                        keyboardAction: TextInputAction.done,
+                                        maxLength: 15,
+                                        suffixIcon: Align(
+                                          alignment: Alignment.centerRight,
+                                          heightFactor: 1.0,
+                                          widthFactor: 1.0,
+                                          child: GestureDetector(
+                                            onTap: () => Future.delayed(Duration.zero, () {
+                                              passwordNode.unfocus();
+                                            }),
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(right: 8.0),
+                                              child: Text(
+                                                S.current.forgot,
+                                                style: textMedium.copyWith(
+                                                  color: AppColor.brownColor,
+                                                  fontSize: 14.0.spMin,
+                                                ),
+                                              ),
                                             ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ),
-                                  21.verticalSpace,
-                                  SizedBox(
-                                    width: 1.sw,
-                                    child: AppButtonInverse("Sign In",radius: 5.r,height: 55.h,
-                                        buttonColor: AppColor.black, () {},
-                                    ),
-                                  ),
-                                  27.verticalSpace,
-                                  InkWell(
-                                    onTap: () {
-                                      appRouter.push(ForgotPasswordRoute());
-                                    },
-                                    child: Align(
-                                      alignment: Alignment.center,
-                                      child: Text(
-                                        "Forgot Password?",
-                                        textAlign: TextAlign.center,
-                                        style: textRegular.copyWith(
-                                            color: AppColor.santasGray,
-                                            decoration: TextDecoration.underline,
-                                            fontSize: 18.spMin),
+                                      21.verticalSpace,
+                                      SizedBox(
+                                        width: 1.sw,
+                                        child: AppButtonInverse("Sign In",radius: 5.r,height: 55.h,
+                                            buttonColor: AppColor.black, () {},
+                                        ),
                                       ),
-                                    ),
+                                      27.verticalSpace,
+                                      InkWell(
+                                        onTap: () {
+                                          appRouter.push(ForgotPasswordRoute());
+                                        },
+                                        child: Align(
+                                          alignment: Alignment.center,
+                                          child: Text(
+                                            "Forgot Password?",
+                                            textAlign: TextAlign.center,
+                                            style: textRegular.copyWith(
+                                                color: AppColor.santasGray,
+                                                decoration: TextDecoration.underline,
+                                                fontSize: 18.spMin),
+                                          ),
+                                        ),
+                                      ),
+                                      10.verticalSpace,
+                                    ],
                                   ),
-                                  10.verticalSpace,
-                                ],
-                              ),
-                            ),
+                                ),
+                              );
+                            },
                           );
-                        },
-                      );
 
-                    },
-                    height: 50.h,
-                    width: 163.w,
-                    radius: 5.r,
-                    buttonColor: AppColor.black,
-                    textColor: AppColor.white,
-                    borderColor: AppColor.black,
+                        },
+                        height: 50.h,
+                        width: 163.w,
+                        radius: 5.r,
+                        buttonColor: AppColor.black,
+                        textColor: AppColor.white,
+                        borderColor: AppColor.black,
+                      ),
+                    ],
                   ),
+                  27.verticalSpace,
+                  InkWell(
+                    onTap: () {
+                      appRouter.push(HomeRoute());
+                    },
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        "Continue as a guest",
+                        textAlign: TextAlign.center,
+                        style: textRegular.copyWith(
+                            color: AppColor.santasGray,
+                            decoration: TextDecoration.underline,
+                            fontSize: 18.spMin),
+                      ),
+                    ),
+                  ),
+                  10.verticalSpace,
                 ],
               ),
-              27.verticalSpace,
-              InkWell(
-                onTap: () {},
-                child: Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    "Continue as a guest",
-                    textAlign: TextAlign.center,
-                    style: textRegular.copyWith(
-                        color: AppColor.santasGray,
-                        decoration: TextDecoration.underline,
-                        fontSize: 18.spMin),
-                  ),
-                ),
-              ),
-              10.verticalSpace,
-            ],
-          ),
+            );
+          }
         ),
       ),
     );

@@ -6,7 +6,7 @@ part of 'auth_api.dart';
 // RetrofitGenerator
 // **************************************************************************
 
-// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
+// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element
 
 class _AuthApi implements AuthApi {
   _AuthApi(
@@ -42,12 +42,12 @@ class _AuthApi implements AuthApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = BaseResponse<UserData?>.fromJson(
+    final _value = BaseResponse<UserData?>.fromJson(
       _result.data!,
       (json) =>
           json == null ? null : UserData.fromJson(json as Map<String, dynamic>),
     );
-    return value;
+    return _value;
   }
 
   @override
@@ -73,11 +73,11 @@ class _AuthApi implements AuthApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = BaseResponse<dynamic>.fromJson(
+    final _value = BaseResponse<dynamic>.fromJson(
       _result.data!,
       (json) => json as dynamic,
     );
-    return value;
+    return _value;
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {

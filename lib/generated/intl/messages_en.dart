@@ -34,6 +34,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "applicationTitle":
             MessageLookupByLibrary.simpleMessage("Flutter Demo Structure"),
         "back": MessageLookupByLibrary.simpleMessage("Back"),
+        "browseCategories":
+            MessageLookupByLibrary.simpleMessage("Browse Categories"),
         "camera": MessageLookupByLibrary.simpleMessage("Camera"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "cancelled": MessageLookupByLibrary.simpleMessage("Cancelled"),
@@ -42,6 +44,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "cardName": MessageLookupByLibrary.simpleMessage("Card Name"),
         "cardNumber": MessageLookupByLibrary.simpleMessage("Card Number"),
         "confPassword":
+            MessageLookupByLibrary.simpleMessage("Confirm Password"),
+        "confirmPassword":
             MessageLookupByLibrary.simpleMessage("Confirm Password"),
         "connectTimeout":
             MessageLookupByLibrary.simpleMessage("Connect timeout"),
@@ -71,6 +75,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "enterCvv": MessageLookupByLibrary.simpleMessage("Please enter cvv"),
         "enterExpiryDate":
             MessageLookupByLibrary.simpleMessage("Please enter expiry date"),
+        "enterYourEmailAddressOrMobileNumberWellSendYou":
+            MessageLookupByLibrary.simpleMessage(
+                "Enter your email address or mobile number we\'ll send you a link to reset password."),
         "errorDuringCommunication":
             MessageLookupByLibrary.simpleMessage("Error During Communication:"),
         "errorUploadingPhoto":
@@ -80,14 +87,17 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Expiry month is invalid"),
         "expiryYearIsInvalid":
             MessageLookupByLibrary.simpleMessage("Expiry year is invalid"),
+        "favorites": MessageLookupByLibrary.simpleMessage("Favorites"),
         "fillDetails": MessageLookupByLibrary.simpleMessage(
             "Fill your below detail to create account"),
+        "firstName": MessageLookupByLibrary.simpleMessage("First Name"),
         "forgot": MessageLookupByLibrary.simpleMessage("Forgot?"),
         "forgotPassword":
             MessageLookupByLibrary.simpleMessage("Forgot Password?"),
         "gallery": MessageLookupByLibrary.simpleMessage("Gallery"),
         "getStarted": MessageLookupByLibrary.simpleMessage("Get Started"),
         "hello": MessageLookupByLibrary.simpleMessage("Hello!"),
+        "hi": MessageLookupByLibrary.simpleMessage("Hi,"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
         "iAgree": MessageLookupByLibrary.simpleMessage("I agree to "),
         "invalidCredentials":
@@ -132,6 +142,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Please enter OTP"),
         "kPleaseEnterValidOtp":
             MessageLookupByLibrary.simpleMessage("Please enter valid OTP"),
+        "lastName": MessageLookupByLibrary.simpleMessage("Last Name"),
         "logIn": MessageLookupByLibrary.simpleMessage("Log in"),
         "login": MessageLookupByLibrary.simpleMessage("Login"),
         "loginToContinue":
@@ -139,6 +150,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "logout": MessageLookupByLibrary.simpleMessage("Logout"),
         "mobNumber": MessageLookupByLibrary.simpleMessage("Mobile Number"),
         "name": MessageLookupByLibrary.simpleMessage("Name"),
+        "newPassword": MessageLookupByLibrary.simpleMessage("New Password"),
         "no": MessageLookupByLibrary.simpleMessage("No"),
         "noActiveInternetConnection": MessageLookupByLibrary.simpleMessage(
             "No Active Internet Connection"),
@@ -176,6 +188,7 @@ class MessageLookup extends MessageLookupByLibrary {
                 "Request can\'t be handled for now. Please try after sometime."),
         "requestToServerWasCancelled": MessageLookupByLibrary.simpleMessage(
             "Request to server was cancelled"),
+        "resendCode": MessageLookupByLibrary.simpleMessage("Resend Code"),
         "responseNull":
             MessageLookupByLibrary.simpleMessage("Response is null"),
         "search": MessageLookupByLibrary.simpleMessage("Search..."),
@@ -199,10 +212,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "tNc": MessageLookupByLibrary.simpleMessage("Terms & Conditions"),
         "unauthorised": MessageLookupByLibrary.simpleMessage("Unauthorised:"),
         "unknownError": MessageLookupByLibrary.simpleMessage("Unknown error"),
+        "update": MessageLookupByLibrary.simpleMessage("Update"),
         "userAllowedToAccessPhotos": MessageLookupByLibrary.simpleMessage(
             "User Allowed to access photos"),
         "userDeniedToAccessPhotos": MessageLookupByLibrary.simpleMessage(
             "User Denied to access photos"),
+        "verify": MessageLookupByLibrary.simpleMessage("Verify"),
         "welComeBack": MessageLookupByLibrary.simpleMessage("Welcome back!"),
         "welcomeBack": MessageLookupByLibrary.simpleMessage("Welcome Back!"),
         "yes": MessageLookupByLibrary.simpleMessage("Yes")

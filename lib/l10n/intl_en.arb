@@ -117,5 +117,16 @@
   "cardHasExpired": "Card has expired",
   "pleaseCheckYourInternetConnection": "Please check your internet connection",
 
-  "addEmployee" : "Add employee"
+  "addEmployee" : "Add employee",
+  "resendCode": "Resend Code",
+  "verify": "Verify",
+  "enterYourEmailAddressOrMobileNumberWellSendYou": "Enter your email address or mobile number we'll send you a link to reset password.",
+  "newPassword": "New Password",
+  "confirmPassword": "Confirm Password",
+  "update": "Update",
+  "lastName": "Last Name",
+  "firstName": "First Name",
+  "hi": "Hi,",
+  "favorites": "Favorites",
+  "browseCategories": "Browse Categories"
 }

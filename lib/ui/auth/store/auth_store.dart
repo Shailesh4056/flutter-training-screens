@@ -36,9 +36,27 @@ abstract class _AuthStoreBase with Store {
   @observable
   String? errorMessage;
 
+  @observable
+  int selectedIndex =0;
+
+  @observable
+  bool isFavorite =false;
+
   final GoogleSignIn googleSignIn = GoogleSignIn();
 
   _AuthStoreBase();
+
+  @action
+  void setSelectedIndex(int index) {
+    selectedIndex = index;
+  }
+  @action
+  void setIsFavorite() {
+    print("object");
+    print(authStore.isFavorite);
+    isFavorite = !isFavorite;
+    print(authStore.isFavorite);
+  }
 
   @action
   Future login(LoginRequestModel request) async {

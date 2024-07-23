@@ -25,8 +25,6 @@ class S {
 
   static const AppLocalizationDelegate delegate = AppLocalizationDelegate();
 
-  String? get letsCreateYourOwn => null;
-
   static Future<S> load(Locale locale) {
     final name = (locale.countryCode?.isEmpty ?? false)
         ? locale.languageCode
@@ -1187,6 +1185,116 @@ class S {
     return Intl.message(
       'Add employee',
       name: 'addEmployee',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Resend Code`
+  String get resendCode {
+    return Intl.message(
+      'Resend Code',
+      name: 'resendCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Verify`
+  String get verify {
+    return Intl.message(
+      'Verify',
+      name: 'verify',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter your email address or mobile number we'll send you a link to reset password.`
+  String get enterYourEmailAddressOrMobileNumberWellSendYou {
+    return Intl.message(
+      'Enter your email address or mobile number we\'ll send you a link to reset password.',
+      name: 'enterYourEmailAddressOrMobileNumberWellSendYou',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `New Password`
+  String get newPassword {
+    return Intl.message(
+      'New Password',
+      name: 'newPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm Password`
+  String get confirmPassword {
+    return Intl.message(
+      'Confirm Password',
+      name: 'confirmPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Update`
+  String get update {
+    return Intl.message(
+      'Update',
+      name: 'update',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Last Name`
+  String get lastName {
+    return Intl.message(
+      'Last Name',
+      name: 'lastName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `First Name`
+  String get firstName {
+    return Intl.message(
+      'First Name',
+      name: 'firstName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Hi,`
+  String get hi {
+    return Intl.message(
+      'Hi,',
+      name: 'hi',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Favorites`
+  String get favorites {
+    return Intl.message(
+      'Favorites',
+      name: 'favorites',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Browse Categories`
+  String get browseCategories {
+    return Intl.message(
+      'Browse Categories',
+      name: 'browseCategories',
       desc: '',
       args: [],
     );

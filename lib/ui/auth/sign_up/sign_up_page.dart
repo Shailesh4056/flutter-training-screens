@@ -29,15 +29,18 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   final bool _isHidden = true;
   late GlobalKey<FormState> _formKey;
-  late TextEditingController nameController;
+  late TextEditingController fNameController;
+  late TextEditingController lNameController;
   late TextEditingController emailController;
   late TextEditingController mobileController;
-  late TextEditingController passwordController;
-  late TextEditingController confPasswordController;
+  late TextEditingController newPasswordController;
+  late TextEditingController confirmPasswordController;
   late FocusNode mobileNode;
   late ValueNotifier<bool> showLoading;
   late ValueNotifier<bool> _isRead;
   late List<ReactionDisposer> _disposers;
+
+  late bool _isObscured;
 
   bool get isCurrent => !ModalRoute.of(context)!.isCurrent;
 
@@ -47,11 +50,13 @@ class _SignUpPageState extends State<SignUpPage> {
   void initState() {
     super.initState();
     _formKey = GlobalKey<FormState>();
-    nameController = TextEditingController();
+    fNameController = TextEditingController();
+    lNameController = TextEditingController();
     emailController = TextEditingController();
     mobileController = TextEditingController();
-    passwordController = TextEditingController();
-    confPasswordController = TextEditingController();
+    newPasswordController = TextEditingController();
+    confirmPasswordController = TextEditingController();
+    _isObscured = true;
     mobileNode = FocusNode();
     showLoading = ValueNotifier<bool>(false);
     _isRead = ValueNotifier<bool>(false);
@@ -60,11 +65,12 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   void dispose() {
     super.dispose();
-    nameController.dispose();
+    fNameController.dispose();
+    lNameController.dispose();
     emailController.dispose();
     mobileController.dispose();
-    passwordController.dispose();
-    confPasswordController.dispose();
+    newPasswordController.dispose();
+    confirmPasswordController.dispose();
     mobileNode.dispose();
     showLoading.dispose();
     _isRead.dispose();
@@ -73,21 +79,28 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios_new_outlined, color: AppColor.black),
+          onPressed: () => appRouter.pop(),
+        ),
+        centerTitle: true,
+        elevation: 0,
+        backgroundColor: AppColor.white,
+        title: Text(
+          S.current.signUp,
+          style: textMedium.copyWith(fontSize: 20.spMin, color: AppColor.black),
+        ),
+      ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(left: 30, right: 30).r,
+          padding: const EdgeInsets.only(left: 15, right: 15).r,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               30.0.verticalSpace,
               getHeaderContent(),
               getSignUpForm(),
-              40.0.verticalSpace,
-              SignUpWidget(
-                fromLogin: false,
-                onTap: () => locator<AppRouter>().pop(),
-              ),
-              40.0.verticalSpace,
             ],
           ),
         ),
@@ -98,20 +111,47 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget getHeaderContent() {
     return Column(
       children: [
-        10.0.verticalSpace,
-        Text(
-          S.current.signUp.toUpperCase(),
-          style: textBold.copyWith(
-            color: AppColor.primaryColor,
-            fontSize: 24.spMin,
-          ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image(
+              image: AssetImage(Assets.imageFacebook),
+              height: 50.h,
+              width: 50.w,
+            ),
+            15.horizontalSpace,
+            Image(
+              image: AssetImage(Assets.imageGoogle),
+              height: 50.h,
+              width: 50.w,
+            ),
+            15.horizontalSpace,
+            Image(
+              image: AssetImage(Assets.imageApple),
+              height: 50.h,
+              width: 50.w,
+            ),
+          ],
         ),
-        10.0.verticalSpace,
-        Text(
-          S.current.fillDetails,
-          style: textLight.copyWith(
-            color: AppColor.primaryColor,
-          ),
+        25.verticalSpace,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image(
+              image: AssetImage(Assets.imageArroeForword),
+              width: 22.w,
+            ),
+            7.horizontalSpace,
+            Text(
+              "Or",
+              style: textMedium.copyWith(color: AppColor.grey),
+            ),
+            7.horizontalSpace,
+            Image(
+              image: AssetImage(Assets.imageArrowBack),
+              width: 22.w,
+            ),
+          ],
         ),
       ],
     );
@@ -122,40 +162,31 @@ class _SignUpPageState extends State<SignUpPage> {
       key: _formKey,
       child: Column(
         children: [
-          25.0.verticalSpace,
+          20.0.verticalSpace,
           AppTextField(
-            controller: nameController,
-            label: S.current.name,
-            hint: S.current.name,
+            controller: fNameController,
+            label: S.current.firstName,
+            hint: S.current.firstName,
             keyboardType: TextInputType.name,
             textCapitalization: TextCapitalization.sentences,
             validators: nameValidator,
-            prefixIcon: IconButton(
-              onPressed: null,
-              icon: Image.asset(
-                Assets.imageUser,
-                color: AppColor.primaryColor,
-                height: 26.0,
-                width: 26.0,
-              ),
-            ),
           ),
           10.0.verticalSpace,
+          AppTextField(
+            controller: lNameController,
+            label: S.current.lastName,
+            hint:  S.current.lastName,
+            keyboardType: TextInputType.name,
+            textCapitalization: TextCapitalization.sentences,
+            validators: nameValidator,
+          ),
+          10.verticalSpace,
           AppTextField(
             controller: emailController,
             label: S.current.email,
             hint: S.current.email,
             keyboardType: TextInputType.emailAddress,
             validators: emailValidator,
-            prefixIcon: IconButton(
-              onPressed: null,
-              icon: Image.asset(
-                Assets.imageBagzag,
-                color: AppColor.primaryColor,
-                height: 26.0,
-                width: 26.0,
-              ),
-            ),
           ),
           10.0.verticalSpace,
           AppTextField(
@@ -170,19 +201,10 @@ class _SignUpPageState extends State<SignUpPage> {
               LengthLimitingTextInputFormatter(10),
             ],
             prefixIcon: Padding(
-              padding: const EdgeInsets.only(right: 5.0),
+              padding: EdgeInsets.only(left: 17.r),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  IconButton(
-                    onPressed: null,
-                    icon: Image.asset(
-                      Assets.imageBagzag,
-                      color: AppColor.primaryColor,
-                      height: 26.0.r,
-                      width: 26.0.r,
-                    ),
-                  ),
                   GestureDetector(
                     onTap: () async => {
                       Future.delayed(Duration.zero, () {
@@ -194,19 +216,27 @@ class _SignUpPageState extends State<SignUpPage> {
                     },
                     child: Row(
                       children: [
+                        CountryPickerUtils.getDefaultFlagImage(
+                            _selectedDialogCountry),
+                        5.horizontalSpace,
                         Text(
                           '+${_selectedDialogCountry.phoneCode}',
                           style: textMedium.copyWith(
                             fontSize: 15.spMin,
                           ),
                         ),
-                        5.0.horizontalSpace,
-                        Image.asset(
-                          Assets.imageBagzag,
-                          color: AppColor.osloGray,
-                          height: 8.0,
-                          width: 8.0,
+                        Icon(
+                          Icons.keyboard_arrow_down_outlined,
+                          color: AppColor.black,
+                          size: 15,
                         ),
+                        5.horizontalSpace,
+                        Container(
+                          width: 2,
+                          height: 15,
+                          color: AppColor.mercury,
+                        ),
+                        5.horizontalSpace,
                       ],
                     ),
                   ),
@@ -214,46 +244,71 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
             ),
           ),
-          10.0.verticalSpace,
+          10.verticalSpace,
           AppTextField(
-            label: S.current.password,
-            hint: S.current.password,
-            obscureText: _isHidden,
+            label: S.current.newPassword,
+            hint: S.current.newPassword,
+            obscureText: _isObscured,
             validators: passwordValidator,
-            controller: passwordController,
-            keyboardType: TextInputType.visiblePassword,
-            maxLength: 15,
-            prefixIcon: IconButton(
-              onPressed: null,
-              icon: Image.asset(
-                Assets.imageBagzag,
-                color: AppColor.primaryColor,
-                height: 26.0,
-                width: 26.0,
-              ),
-            ),
-          ),
-          10.0.verticalSpace,
-          AppTextField(
-            label: S.current.confPassword,
-            hint: S.current.confPassword,
-            obscureText: _isHidden,
-            validators: confPasswordValidator,
-            controller: confPasswordController,
+            controller: newPasswordController,
+            // focusNode: passwordNode,
             keyboardType: TextInputType.visiblePassword,
             keyboardAction: TextInputAction.done,
             maxLength: 15,
-            prefixIcon: IconButton(
-              onPressed: null,
-              icon: Image.asset(
-                Assets.imageBagzag,
-                color: AppColor.primaryColor,
-                height: 26.0,
-                width: 26.0,
+            suffixIcon: Align(
+              alignment: Alignment.centerRight,
+              heightFactor: 1.0,
+              widthFactor: 1.0,
+              child: GestureDetector(
+                onTap: () => Future.delayed(Duration.zero, () {
+                  // passwordNode.unfocus();
+                }),
+                child: Padding(
+                    padding: EdgeInsets.only(right: 20.r),
+                    child: InkWell(child: Icon(_isObscured ? Icons.visibility : Icons.visibility_off,size: 20.r,),
+                      onTap: (){
+                        _isObscured = !_isObscured;
+                        setState(() {
+
+                        });
+                      },)
+                ),
               ),
             ),
           ),
-          16.0.verticalSpace,
+          10.verticalSpace,
+          AppTextField(
+            label: S.current.confirmPassword,
+            hint: S.current.confirmPassword,
+            obscureText: _isObscured,
+            validators: passwordValidator,
+            controller: newPasswordController,
+            // focusNode: passwordNode,
+            keyboardType: TextInputType.visiblePassword,
+            keyboardAction: TextInputAction.done,
+            maxLength: 15,
+            suffixIcon: Align(
+              alignment: Alignment.centerRight,
+              heightFactor: 1.0,
+              widthFactor: 1.0,
+              child: GestureDetector(
+                onTap: () => Future.delayed(Duration.zero, () {
+                  // passwordNode.unfocus();
+                }),
+                child: Padding(
+                    padding: EdgeInsets.only(right: 20.r),
+                    child: InkWell(child: Icon(_isObscured ? Icons.visibility : Icons.visibility_off,size: 20.r,),
+                      onTap: (){
+                        _isObscured = !_isObscured;
+                        setState(() {
+
+                        });
+                      },)
+                ),
+              ),
+            ),
+          ),
+          10.0.verticalSpace,
           ValueListenableBuilder<bool>(
             valueListenable: _isRead,
             builder: (context, bool value, child) => Row(
@@ -267,8 +322,8 @@ class _SignUpPageState extends State<SignUpPage> {
                     splashColor: AppColor.transparent,
                     padding: EdgeInsets.zero,
                     icon: Image.asset(
-                      Assets.imageBagzag,
-                      color: value ? AppColor.primaryColor : AppColor.osloGray,
+                      Assets.imageTickSquare,
+                      color: value ? AppColor.neonPink : AppColor.osloGray,
                     ),
                     onPressed: () => _isRead.value = !value,
                   ),
@@ -287,6 +342,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           text: S.current.tNc,
                           style: textSemiBold.copyWith(
                             fontSize: 14.spMin,
+                            color: AppColor.black
                           ),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
@@ -302,6 +358,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           text: S.current.privacyPolicy,
                           style: textSemiBold.copyWith(
                             fontSize: 14.spMin,
+                              color: AppColor.black
                           ),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
@@ -320,33 +377,38 @@ class _SignUpPageState extends State<SignUpPage> {
             ),
           ),
           18.0.verticalSpace,
-          AppButtonInverse(
-            S.current.signUp.toUpperCase(),
-            () {
-              //navigator.pushNamed(RouteName.otpVerificationPage);
-              if (_formKey.currentState?.validate() ?? false) {
-                if (passwordController.text.trim() !=
-                    confPasswordController.text.trim()) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(S.current.passwordMismatch)),
-                  );
+          SizedBox(
+            width:1.sw,
+            child: AppButtonInverse(S.current.signUp,buttonColor: AppColor.black,
+                textColor: AppColor.white,
+                radius: 5.r
+                ,(){
+                  {
+                    //navigator.pushNamed(RouteName.otpVerificationPage);
+                    if (_formKey.currentState?.validate() ?? false) {
+                      if (newPasswordController.text.trim() !=
+                          confirmPasswordController.text.trim()) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text(S.current.passwordMismatch)),
+                        );
 
-                  return;
-                }
-                if (!_isRead.value) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        S.current.acceptTnC,
-                      ),
-                    ),
-                  );
+                        return;
+                      }
+                      if (!_isRead.value) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              S.current.acceptTnC,
+                            ),
+                          ),
+                        );
 
-                  return;
-                }
-                signUpAndNavigateToHome();
-              }
-            },
+                        return;
+                      }
+                      signUpAndNavigateToHome();
+                    }
+                  }
+                }),
           ),
         ],
       ),
@@ -354,7 +416,7 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   Future<void> signUpAndNavigateToHome() async {
-    locator<AppRouter>().push(const HomeRoute());
+    locator<AppRouter>().push(const OtpRoute());
   }
 
   void removeDisposer() {
@@ -363,31 +425,75 @@ class _SignUpPageState extends State<SignUpPage> {
     }
   }
 
-  Widget _buildDialogItem(Country country) => Row(
-        children: <Widget>[
-          CountryPickerUtils.getDefaultFlagImage(country),
-          const SizedBox(width: 8.0),
-          Text("+${country.phoneCode}"),
-          const SizedBox(width: 8.0),
-          Flexible(child: Text(country.name))
-        ],
-      );
 
-  Future _openCountryPickerDialog() => showDialog(
-        context: context,
-        builder: (context) => CountryPickerDialog(
-          titlePadding: const EdgeInsets.all(8.0),
-          searchCursorColor: Colors.lightBlueAccent,
-          searchInputDecoration: InputDecoration(hintText: S.current.search),
-          isSearchable: true,
-          title: Text(S.current.selectYourPhoneCode),
-          onValuePicked: (Country country) =>
-              setState(() => _selectedDialogCountry = country),
-          itemBuilder: _buildDialogItem,
-          priorityList: [
-            CountryPickerUtils.getCountryByIsoCode('US'),
-            CountryPickerUtils.getCountryByIsoCode('IN'),
+  Widget _buildDialogItem(Country country) => Column(
+    mainAxisSize: MainAxisSize.min,
+    mainAxisAlignment: MainAxisAlignment.start,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Container(
+        padding: EdgeInsets.symmetric(vertical: 15.r),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            CountryPickerUtils.getDefaultFlagImage(country),
+            const SizedBox(width: 8.0),
+            Flexible(
+              fit: FlexFit.tight,
+              child: Text(
+                country.name,
+                overflow: TextOverflow.fade,
+                style: textRegular.copyWith(
+                  fontSize: 15.spMin,
+                ),
+              ),
+            ),
+            Spacer(),
+            Text(
+              "+${country.phoneCode}",
+              style: textRegular.copyWith(fontSize: 15),
+            ),
           ],
         ),
-      );
+      ),
+      Divider(
+        color: AppColor.mercury,
+      ),
+    ],
+  );
+
+  Future _openCountryPickerDialog() => showDialog(
+    barrierDismissible: true,
+    context: context,
+    builder: (context) => CountryPickerDialog(
+      isDividerEnabled: true,
+      popOnPick: true,
+      titlePadding: const EdgeInsets.all(8.0),
+      searchCursorColor: Colors.lightBlueAccent,
+      searchInputDecoration: InputDecoration(
+          contentPadding: EdgeInsets.fromLTRB(12, 18, 12, 18),
+          hintText: S.current.search,
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(5.r),
+              borderSide: BorderSide(color: AppColor.mercury)),
+          hintStyle: textRegular.copyWith(color: AppColor.mercury),
+          prefixIcon:
+          Icon(Icons.search, color: AppColor.black, size: 22.r)),
+      isSearchable: true,
+      title: Text(
+        "Choose your country code",
+        overflow: TextOverflow.fade,
+        style:
+        textMedium.copyWith(color: AppColor.black, fontSize: 20.spMin),
+      ),
+      onValuePicked: (Country country) =>
+          setState(() => _selectedDialogCountry = country),
+      itemBuilder: _buildDialogItem,
+      priorityList: [
+        CountryPickerUtils.getCountryByIsoCode('US'),
+        CountryPickerUtils.getCountryByIsoCode('IN'),
+      ],
+    ),
+  );
 }
